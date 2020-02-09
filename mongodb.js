@@ -1,12 +1,18 @@
 // Examples of CRUD (Create, Read, Update, Delete) examples
 
 // NPM Modules
-const mongodb = require('mongodb')
-const MongoClient = mongodb.MongoClient
+// const mongodb = require('mongodb')
+// const MongoClient = mongodb.MongoClient
+// const ObjectID = mongodb.ObjectID
+
+const { MongoClient, ObjectID } = require('mongodb')
 
 // Variables
 const connectionURL = "mongodb://127.0.0.1:27017"
 const databaseName = "task-app"
+
+const id = new ObjectID()
+console.log(id)
 
 MongoClient.connect(connectionURL, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => {
     if (error) {
@@ -15,50 +21,15 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true, useUnifiedTopology: 
 
     const db = client.db(databaseName)
 
-    // db.collection('users').insertOne({
-    //     name: 'Chun',
-    //     age: 34
-    // }, (error, result) => {
-    //     if (error) {
-    //         return console.log("Unable to insert user.")
-    //     }
-    //     console.log(result.ops) 
-    // })
-
-    // db.collection('users').insertMany([
-    //     {
-    //         name: 'Chun',
-    //         age: 34,
-    //     },
-    //     {
-    //         name: 'Sarah',
-    //         age: 26
-    //     }
-    // ], (error, result) => {
-    //     if (error) {
-    //         return console.log('Unable to insert documents!')
-    //     }
-
-    //     console.log(result.ops)
-    // })
-
-    db.collection('tasks').insertMany([
-        {
-            description: 'Clean the house',
-            completed: true
-        }, {
-            description: ' Renew Inspection',
-            completed: false
-        }, {
-            description: 'Pot Plants',
-            completed: false
+    db.collection('users').findOne({
+        name: 'Chun'
+    }, (error, user) => {
+        if (error) {
+            return console.log('Unable to fetch')
         }
-        ], (error, result) => {
-            if (error) {
-                return console.log('Unable to insert tasks!')
-            }
-        console.log(result.ops)
-        })
+
+        console.log(user)
+    })
 })
 
 
